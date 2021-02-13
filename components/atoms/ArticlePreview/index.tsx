@@ -1,20 +1,12 @@
 import React from 'react';
 import Link from "next/link";
+import Article from "../../../types/Article";
 
 type ArticlePreviewProps = {
-    author: any;
-    body: string;
-    createdAt: Date;
-    description: string;
-    favorited: boolean;
-    favoritesCount: number;
-    slug: string;
-    tagList: any[];
-    title: string;
-    updatedAt: Date;
+    article: Article
 }
 
-function ArticlePreview({author, createdAt, favoritesCount, title, description}:ArticlePreviewProps) {
+function ArticlePreview({article: {author, createdAt, favoritesCount, title, description}}: ArticlePreviewProps) {
     return (
         <div className="article-preview">
             <div className="article-meta">
