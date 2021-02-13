@@ -6,7 +6,16 @@ type ArticlePreviewProps = {
     article: Article
 }
 
-function ArticlePreview({article: {author, createdAt, favoritesCount, title, description}}: ArticlePreviewProps) {
+function ArticlePreview({
+                            article: {
+                                author,
+                                createdAt,
+                                favoritesCount,
+                                title,
+                                description,
+                                tagList
+                            }
+                        }: ArticlePreviewProps) {
     return (
         <div className="article-preview">
             <div className="article-meta">
@@ -25,6 +34,9 @@ function ArticlePreview({article: {author, createdAt, favoritesCount, title, des
                 <h1>{title}</h1>
                 <p>{description}</p>
                 <span>Read more...</span>
+                <ul className="tag-list">
+                    {tagList.map(tag => <li className="tag-default tag-pill tag-outline">{tag}</li>)}
+                </ul>
             </a>
         </div>
     );

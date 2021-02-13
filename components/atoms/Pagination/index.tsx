@@ -5,9 +5,10 @@ type PaginationProps = {
     currentPage: number;
     total: number;
     pageSize: number;
+    tag?: string;
 }
 
-function Pagination({currentPage, total, pageSize}: PaginationProps) {
+function Pagination({currentPage, total, pageSize, tag}: PaginationProps) {
     const {pageStart, pageCount} = paginationCalc({total, currentPage, pageSize})
     const pageList = useMemo(() => Array(pageCount).fill(0).map((_, index) => index + pageStart)
         , [pageStart, pageCount]);
@@ -15,7 +16,7 @@ function Pagination({currentPage, total, pageSize}: PaginationProps) {
         <nav>
             <ul className="pagination">
                 {pageList.map(page => <PaginationItem isActive={page === currentPage}
-                                                      key={`pagination-item-${page}`} page={page}/>)}
+                                                      key={`pagination-item-${page}`} page={page} tag={tag}/>)}
             </ul>
         </nav>
     );

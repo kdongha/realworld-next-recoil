@@ -8,10 +8,10 @@ type PaginationItemProps = {
     tag?: string;
 }
 
-function PaginationItem({page, isActive = false}: PaginationItemProps) {
+function PaginationItem({page, isActive = false, tag}: PaginationItemProps) {
     return (
         <li className={cx('page-item', {active: isActive})}>
-            <Link href={`/?page=${page}`}>
+            <Link href={`/?page=${page}${tag ? `&tag=${tag}` : ''}`}>
                 <a className="page-link">
                     {page}
                 </a>
