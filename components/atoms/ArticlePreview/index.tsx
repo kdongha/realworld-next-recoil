@@ -8,6 +8,7 @@ type ArticlePreviewProps = {
 
 function ArticlePreview({
                             article: {
+                                slug,
                                 author,
                                 createdAt,
                                 favoritesCount,
@@ -27,10 +28,11 @@ function ArticlePreview({
                     <span className="date">{createdAt}</span>
                 </div>
                 <button className="btn btn-outline-primary btn-sm pull-xs-right">
-                    <i className="ion-heart"></i> {favoritesCount}
+                    <i className="ion-heart"/> {favoritesCount}
                 </button>
             </div>
-            <a href="" className="preview-link">
+            <Link href={`/article/${slug}`}>
+            <a className="preview-link">
                 <h1>{title}</h1>
                 <p>{description}</p>
                 <span>Read more...</span>
@@ -38,6 +40,7 @@ function ArticlePreview({
                     {tagList.map(tag => <li className="tag-default tag-pill tag-outline">{tag}</li>)}
                 </ul>
             </a>
+            </Link>
         </div>
     );
 }
