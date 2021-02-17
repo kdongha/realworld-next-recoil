@@ -32,14 +32,15 @@ function ArticlePreview({
                 </button>
             </div>
             <Link href={`/article/${slug}`}>
-            <a className="preview-link">
-                <h1>{title}</h1>
-                <p>{description}</p>
-                <span>Read more...</span>
-                <ul className="tag-list">
-                    {tagList.map(tag => <li className="tag-default tag-pill tag-outline">{tag}</li>)}
-                </ul>
-            </a>
+                <a className="preview-link">
+                    <h1>{title}</h1>
+                    <p>{description}</p>
+                    <span>Read more...</span>
+                    <ul className="tag-list">
+                        {tagList.map((tag, index) => <li key={`tag-list-${index}-${tag}`}
+                                                         className="tag-default tag-pill tag-outline">{tag}</li>)}
+                    </ul>
+                </a>
             </Link>
         </div>
     );
