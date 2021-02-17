@@ -1,24 +1,35 @@
 import React from 'react';
 import {useRouter} from "next/router";
-import {selectorFamily, useRecoilValueLoadable} from "recoil";
+import {selectorFamily, useRecoilValue, useRecoilValueLoadable, waitForAll} from "recoil";
 import axios from "axios";
 import ArticleBanner from "../../atoms/ArticleBanner";
 import Article from "../../../types/Article";
 import Link from "next/link";
+import Comment from "../../../types/Comment";
+import CommentCard from "../../atoms/CommentCard";
 
 const article = selectorFamily({
     key: 'articleSelector',
     get: (slug: string) => async (): Promise<Article> => (await axios.get(`https://conduit.productionready.io/api/articles/${slug}`)).data.article
 })
 
+const commentList = selectorFamily({
+    key: 'commentListSelector',
+    get: (slug: string) => async (): Promise<Comment[]> => (await axios.get(`https://conduit.productionready.io/api/articles/${slug}/comments`)).data.comments
+})
+
 function ArticleDetailSection() {
     const router = useRouter();
     const {slug} = router.query;
-    const {state, contents} = useRecoilValueLoadable(article(String(slug)));
-    if (state === 'loading') {
+    const {state: articleState, contents: articleContents} = useRecoilValueLoadable(article(String(slug)));
+    const {state: commentListState, contents: commentListContents} = useRecoilValueLoadable(commentList(String(slug)));
+    if (articleState === 'loading' || commentListState === 'loading') {
         return <div>Loading...</div>
     }
-    const {body, author, createdAt, favorited, favoritesCount, title, updatedAt} = contents as Article;
+    if (articleState === 'hasError' || commentListState === 'hasError') {
+        return <div>Error!</div>
+    }
+    const {body, author, createdAt, favorited, favoritesCount, title, updatedAt} = (articleContents as Article);
     return (
         <div className="article-page">
             <ArticleBanner author={author} createdAt={createdAt} favorited={favorited} favoritesCount={favoritesCount}
@@ -67,38 +78,7 @@ function ArticleDetailSection() {
                                 </button>
                             </div>
                         </form>
-                        <div className="card">
-                            <div className="card-block">
-                                <p className="card-text">With supporting text below as a natural lead-in to additional
-                                    content.</p>
-                            </div>
-                            <div className="card-footer">
-                                <a href="" className="comment-author">
-                                    <img src="http://i.imgur.com/Qr71crq.jpg" className="comment-author-img"/>
-                                </a>
-                                &nbsp;
-                                <a href="" className="comment-author">Jacob Schmidt</a>
-                                <span className="date-posted">Dec 29th</span>
-                            </div>
-                        </div>
-                        <div className="card">
-                            <div className="card-block">
-                                <p className="card-text">With supporting text below as a natural lead-in to additional
-                                    content.</p>
-                            </div>
-                            <div className="card-footer">
-                                <a href="" className="comment-author">
-                                    <img src="http://i.imgur.com/Qr71crq.jpg" className="comment-author-img"/>
-                                </a>
-                                &nbsp;
-                                <a href="" className="comment-author">Jacob Schmidt</a>
-                                <span className="date-posted">Dec 29th</span>
-                                <span className="mod-options">
-                                  <i className="ion-edit"/>
-                                  <i className="ion-trash-a"/>
-                                </span>
-                            </div>
-                        </div>
+                        {(commentListContents as Comment[]).map(comment => <CommentCard comment={comment}/>)}
                     </div>
                 </div>
             </div>
