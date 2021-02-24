@@ -7,8 +7,7 @@ type ArticleBannerProps = {
     createdAt: Date;
     updatedAt: Date;
     favorited: boolean;
-    favoritesCount: number;
-
+    favoritesCount: number
 }
 
 function ArticleBanner({title, author, createdAt, favorited, favoritesCount}: ArticleBannerProps) {
