@@ -1,6 +1,6 @@
 import React from 'react';
-import ArticlePreview from "../ArticlePreview";
-import Article from "../../../types/Article";
+import ArticlePreview from "../atoms/ArticlePreview";
+import Article from "../../types/Article";
 
 type ArticlePreviewListProps = {
     articleList: Article[];

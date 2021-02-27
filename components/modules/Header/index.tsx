@@ -1,9 +1,10 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import Link from "next/link";
 import NavBar from "../../atoms/NavBar";
 import {useRouter} from "next/router";
 import {useRecoilValue} from "recoil";
 import user from "../../../state/atoms/user";
+import axios from "axios";
 
 function Header() {
     const router = useRouter();

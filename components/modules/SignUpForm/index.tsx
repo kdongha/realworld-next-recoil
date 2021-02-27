@@ -17,7 +17,7 @@ function SignUpForm() {
     const handleSignUp = async (e) => {
         e.preventDefault();
         try {
-            const {data} = await axios.post(`https://conduit.productionready.io/api/users`, {
+            const {data} = await axios.post('/api/users', {
                 user: {
                     username,
                     email,

@@ -16,7 +16,7 @@ function SignInForm() {
     const handleSignIn = useCallback(async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         try {
-            const {data} = await axios.post(`https://conduit.productionready.io/api/users/login`, {
+            const {data} = await axios.post('/api/users/login', {
                 user: {
                     email,
                     password

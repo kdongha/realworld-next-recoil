@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import PaginationItem from "../PaginationItem";
+import PaginationItem from "./PaginationItem";
 
 type PaginationProps = {
     currentPage: number;
